@@ -1,8 +1,8 @@
-# Product Clustering — PriceRunner Dataset
+# Product Clustering - PriceRunner Dataset
 
 This project groups e-commerce products from the **PriceRunner Product Aggregate** dataset using **K-Means Clustering**. It covers data exploration, preprocessing, selecting the optimal number of clusters (Elbow Method and Silhouette Score), model training, and cluster visualization with PCA.
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 Clustering/
@@ -21,7 +21,7 @@ Clustering/
 └── README.md
 ```
 
-## 🚀 How to Run
+## How to Run
 
 ```bash
 git clone https://github.com/haikalfr04/Clustering.git
@@ -32,7 +32,7 @@ python main.py
 
 The plots are saved to the `images/` folder, and the dataset with its cluster labels is saved to `outputs/pricerunner_clustered.csv`.
 
-## 📊 Dataset
+## Dataset
 
 | Description | Value |
 |---|---|
@@ -48,7 +48,7 @@ Columns: `Product ID`, `Product Title`, `Merchant ID`, `Cluster ID`, `Cluster La
 
 Product categories: Mobile Phones, TVs, CPUs, Digital Cameras, Microwaves, Dishwashers, Washing Machines, Freezers, Fridge Freezers, and Fridges.
 
-## ⚙️ Methodology
+## Methodology
 
 ### 1. Preprocessing
 - Removed extra whitespace from column names.
@@ -85,24 +85,24 @@ The features were reduced to two principal components (PC1 and PC2) using PCA:
 
 ![PCA Clusters](images/pca_clusters.png)
 
-## 🔍 Results and Insights
+## Results and Insights
 
 - The dataset is clean (no missing values) and contains 35,311 products across 10 categories.
 - The optimal number of clusters is **7**, with a Silhouette Score of **0.5809**, which indicates a fairly strong cluster structure.
 - The PCA plot shows seven clearly separated clusters in two-dimensional space.
 - Since most features come from the one-hot encoded `Category Label`, the clusters mainly group products by category and `Merchant ID`.
 
-## 📌 Next Steps
+## Next Steps
 
 - **Cluster profiling:** group the data by `KMeans_Cluster` to examine the category and merchant composition of each cluster.
 - **Evaluation against ground truth:** compare the KMeans results with `Cluster ID` / `Category Label` using metrics such as the *Adjusted Rand Index (ARI)* or *Normalized Mutual Information (NMI)*.
 - **Wider range of k:** the Silhouette Score was still increasing at k = 7, so values of k greater than 7 should also be tested.
 - **Text features:** use `Product Title` (for example, with TF-IDF) to make the clustering more informative.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-Python · pandas · NumPy · scikit-learn · Matplotlib · Seaborn
+Python, pandas, NumPy, scikit-learn, Matplotlib, Seaborn
 
-## 📚 Data Source
+## Data Source
 
-[PriceRunner Product Classification and Clustering — UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/837/product+classification+and+clustering)
+[PriceRunner Product Classification and Clustering - UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/837/product+classification+and+clustering)
