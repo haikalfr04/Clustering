@@ -1,6 +1,6 @@
-"""Pipeline clustering produk PriceRunner menggunakan KMeans.
+"""PriceRunner product clustering pipeline using KMeans.
 
-Jalankan:
+Usage:
     python main.py
 """
 import os
@@ -24,22 +24,22 @@ def main():
     scaled_df, _ = preprocess(df)
     print("\nScaled features shape:", scaled_df.shape)
 
-    # 3. Menentukan jumlah cluster optimal
+    # 3. Determine the optimal number of clusters
     k_range, wcss = compute_wcss(scaled_df)
     plot_elbow(k_range, wcss, save_path="images/elbow_method.png")
     compute_silhouette_scores(scaled_df)
 
-    # 4. Training KMeans dengan k optimal
+    # 4. Train KMeans with the optimal k
     _, labels = train_kmeans(scaled_df, K_OPTIMAL)
     df["KMeans_Cluster"] = labels
 
-    # 5. Visualisasi cluster dengan PCA
+    # 5. Visualize clusters with PCA
     plot_pca_clusters(scaled_df, labels, save_path="images/pca_clusters.png")
 
-    # 6. Simpan hasil
+    # 6. Save results
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     df.to_csv(OUTPUT_PATH, index=False)
-    print(f"\nHasil clustering disimpan di {OUTPUT_PATH}")
+    print(f"\nClustering results saved to {OUTPUT_PATH}")
     print(df["KMeans_Cluster"].value_counts().sort_index())
 
 

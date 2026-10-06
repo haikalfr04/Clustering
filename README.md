@@ -1,27 +1,27 @@
 # Product Clustering — PriceRunner Dataset
 
-Segmentasi produk e-commerce dari dataset **PriceRunner Product Aggregate** menggunakan algoritma **K-Means Clustering**. Proyek ini mencakup eksplorasi data, preprocessing, penentuan jumlah cluster optimal (Elbow Method & Silhouette Score), training model, dan visualisasi hasil cluster dengan PCA.
+This project groups e-commerce products from the **PriceRunner Product Aggregate** dataset using **K-Means Clustering**. It covers data exploration, preprocessing, selecting the optimal number of clusters (Elbow Method and Silhouette Score), model training, and cluster visualization with PCA.
 
-## 📁 Struktur Repository
+## 📁 Repository Structure
 
 ```
 Clustering/
 ├── data/
 │   └── pricerunner_aggregate.csv   # Dataset
 ├── images/
-│   ├── elbow_method.png            # Plot Elbow Method
-│   └── pca_clusters.png            # Visualisasi cluster (PCA 2D)
+│   ├── elbow_method.png            # Elbow Method plot
+│   └── pca_clusters.png            # Cluster visualization (2D PCA)
 ├── src/
-│   ├── data_loader.py              # Load & eksplorasi data
-│   ├── preprocessing.py            # Encoding & scaling fitur
-│   ├── clustering.py               # Elbow, Silhouette, training KMeans
-│   └── visualization.py            # Plot Elbow & PCA
-├── main.py                         # Pipeline utama
+│   ├── data_loader.py              # Data loading and exploration
+│   ├── preprocessing.py            # Feature encoding and scaling
+│   ├── clustering.py               # Elbow, Silhouette, and KMeans training
+│   └── visualization.py            # Elbow and PCA plots
+├── main.py                         # Main pipeline
 ├── requirements.txt
 └── README.md
 ```
 
-## 🚀 Cara Menjalankan
+## 🚀 How to Run
 
 ```bash
 git clone https://github.com/haikalfr04/Clustering.git
@@ -30,40 +30,40 @@ pip install -r requirements.txt
 python main.py
 ```
 
-Plot akan disimpan ke folder `images/` dan dataset beserta label cluster disimpan ke `outputs/pricerunner_clustered.csv`.
+The plots are saved to the `images/` folder, and the dataset with its cluster labels is saved to `outputs/pricerunner_clustered.csv`.
 
 ## 📊 Dataset
 
-| Keterangan | Nilai |
+| Description | Value |
 |---|---|
-| Jumlah baris | 35.311 |
-| Jumlah kolom | 7 |
+| Number of rows | 35,311 |
+| Number of columns | 7 |
 | Missing values | 0 |
-| Kategori produk unik | 10 |
-| Product Title unik | 30.993 |
-| Cluster Label (ground truth) unik | 12.849 |
-| Kategori terbanyak | Fridge Freezers (5.501 produk) |
+| Unique product categories | 10 |
+| Unique product titles | 30,993 |
+| Unique cluster labels (ground truth) | 12,849 |
+| Most frequent category | Fridge Freezers (5,501 products) |
 
-Kolom: `Product ID`, `Product Title`, `Merchant ID`, `Cluster ID`, `Cluster Label`, `Category ID`, `Category Label`.
+Columns: `Product ID`, `Product Title`, `Merchant ID`, `Cluster ID`, `Cluster Label`, `Category ID`, `Category Label`.
 
-Kategori produk: Mobile Phones, TVs, CPUs, Digital Cameras, Microwaves, Dishwashers, Washing Machines, Freezers, Fridge Freezers, Fridges.
+Product categories: Mobile Phones, TVs, CPUs, Digital Cameras, Microwaves, Dishwashers, Washing Machines, Freezers, Fridge Freezers, and Fridges.
 
-## ⚙️ Metodologi
+## ⚙️ Methodology
 
 ### 1. Preprocessing
-- Menghapus whitespace di nama kolom.
-- Mengecek missing values (tidak ditemukan).
-- Menghapus kolom identifier/granular (`Product ID`, `Product Title`) dan kolom ground truth (`Cluster ID`, `Cluster Label`) agar tidak terjadi *data leakage*.
-- *One-Hot Encoding* pada `Category Label` (`drop_first=True`).
-- Standarisasi fitur dengan `StandardScaler` → menghasilkan **11 fitur**.
+- Removed extra whitespace from column names.
+- Checked for missing values (none were found).
+- Dropped identifier columns (`Product ID`, `Product Title`) and ground-truth columns (`Cluster ID`, `Cluster Label`) to prevent *data leakage*.
+- Applied *One-Hot Encoding* to `Category Label` (`drop_first=True`).
+- Standardized all features with `StandardScaler`, resulting in **11 features**.
 
-### 2. Menentukan Jumlah Cluster Optimal
+### 2. Choosing the Optimal Number of Clusters
 
-**Elbow Method** (WCSS untuk k = 2–10):
+**Elbow Method** (WCSS for k = 2–10):
 
 ![Elbow Method](images/elbow_method.png)
 
-**Silhouette Score** (dihitung pada sampel 5.000 data):
+**Silhouette Score** (calculated on a sample of 5,000 rows):
 
 | k | Silhouette Score |
 |---|---|
@@ -74,35 +74,35 @@ Kategori produk: Mobile Phones, TVs, CPUs, Digital Cameras, Microwaves, Dishwash
 | 6 | 0.4884 |
 | **7** | **0.5809** |
 
-Silhouette Score terus meningkat dan mencapai nilai tertinggi pada **k = 7**, sehingga k = 7 dipilih sebagai jumlah cluster.
+The Silhouette Score increased steadily and reached its highest value at **k = 7**, so seven clusters were selected.
 
-### 3. Training Model
-Model `KMeans(n_clusters=7, random_state=42, n_init=10)` dilatih pada seluruh data yang sudah di-scale, lalu label cluster ditambahkan ke dataset asli sebagai kolom `KMeans_Cluster`.
+### 3. Model Training
+A `KMeans(n_clusters=7, random_state=42, n_init=10)` model was trained on the full scaled dataset. The resulting cluster labels were added to the original data as the `KMeans_Cluster` column.
 
-### 4. Visualisasi Cluster (PCA)
+### 4. Cluster Visualization (PCA)
 
-Fitur direduksi menjadi 2 komponen utama (PC1 & PC2) dengan PCA:
+The features were reduced to two principal components (PC1 and PC2) using PCA:
 
 ![PCA Clusters](images/pca_clusters.png)
 
-## 🔍 Hasil & Insight
+## 🔍 Results and Insights
 
-- Dataset bersih (tanpa missing value) dengan 35.311 produk dari 10 kategori.
-- Jumlah cluster optimal adalah **7** dengan Silhouette Score **0.5809**, menunjukkan struktur cluster yang cukup kuat.
-- Visualisasi PCA memperlihatkan 7 cluster yang terpisah dengan jelas di ruang 2 dimensi.
-- Karena fitur yang dipakai didominasi hasil one-hot encoding `Category Label`, cluster yang terbentuk cenderung mengelompokkan produk berdasarkan kategori dan `Merchant ID`.
+- The dataset is clean (no missing values) and contains 35,311 products across 10 categories.
+- The optimal number of clusters is **7**, with a Silhouette Score of **0.5809**, which indicates a fairly strong cluster structure.
+- The PCA plot shows seven clearly separated clusters in two-dimensional space.
+- Since most features come from the one-hot encoded `Category Label`, the clusters mainly group products by category and `Merchant ID`.
 
 ## 📌 Next Steps
 
-- **Profiling cluster:** melakukan group-by berdasarkan `KMeans_Cluster` untuk melihat komposisi kategori dan merchant di tiap cluster.
-- **Evaluasi terhadap ground truth:** membandingkan hasil KMeans dengan `Cluster ID`/`Category Label` menggunakan metrik seperti *Adjusted Rand Index (ARI)* atau *Normalized Mutual Information (NMI)*.
-- **Rentang k lebih luas:** Silhouette Score masih naik di k = 7, sehingga perlu diuji untuk k > 7.
-- **Fitur teks:** memanfaatkan `Product Title` (misalnya TF-IDF) agar clustering lebih informatif.
+- **Cluster profiling:** group the data by `KMeans_Cluster` to examine the category and merchant composition of each cluster.
+- **Evaluation against ground truth:** compare the KMeans results with `Cluster ID` / `Category Label` using metrics such as the *Adjusted Rand Index (ARI)* or *Normalized Mutual Information (NMI)*.
+- **Wider range of k:** the Silhouette Score was still increasing at k = 7, so values of k greater than 7 should also be tested.
+- **Text features:** use `Product Title` (for example, with TF-IDF) to make the clustering more informative.
 
 ## 🛠️ Tech Stack
 
 Python · pandas · NumPy · scikit-learn · Matplotlib · Seaborn
 
-## 📚 Sumber Data
+## 📚 Data Source
 
 [PriceRunner Product Classification and Clustering — UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/837/product+classification+and+clustering)

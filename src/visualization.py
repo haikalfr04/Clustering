@@ -1,4 +1,4 @@
-"""Visualisasi hasil Elbow Method dan cluster (PCA 2D)."""
+"""Visualization of the Elbow Method and clusters (2D PCA)."""
 import os
 
 import matplotlib.pyplot as plt
@@ -19,7 +19,7 @@ def plot_elbow(k_range, wcss, save_path=None):
 
 
 def plot_pca_clusters(X, labels, save_path=None):
-    """Reduksi fitur ke 2 dimensi dengan PCA lalu plot cluster."""
+    """Reduce the features to 2 dimensions with PCA and plot the clusters."""
     pca = PCA(n_components=2, random_state=42)
     pca_features = pca.fit_transform(X)
 

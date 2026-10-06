@@ -1,18 +1,18 @@
-"""Preprocessing fitur untuk clustering."""
+"""Feature preprocessing for clustering."""
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
-# Kolom identifier/granular dan ground truth yang tidak dipakai untuk training
+# Identifier and ground-truth columns that are excluded from training
 DROP_COLUMNS = ["Product ID", "Product Title", "Cluster ID", "Cluster Label"]
 CATEGORICAL_COLUMNS = ["Category Label"]
 
 
 def preprocess(df):
-    """Drop kolom identifier, one-hot encoding kategori, lalu standarisasi fitur.
+    """Drop identifier columns, one-hot encode categories, and standardize features.
 
     Returns:
-        scaled_df (pd.DataFrame): fitur yang sudah di-scale.
-        scaler (StandardScaler): scaler yang sudah di-fit.
+        scaled_df (pd.DataFrame): the scaled features.
+        scaler (StandardScaler): the fitted scaler.
     """
     features_df = df.drop(columns=DROP_COLUMNS)
     features_encoded = pd.get_dummies(

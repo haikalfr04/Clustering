@@ -1,16 +1,16 @@
-"""Load dan eksplorasi awal dataset PriceRunner."""
+"""Load and explore the PriceRunner dataset."""
 import pandas as pd
 
 
 def load_data(path):
-    """Membaca dataset CSV dan merapikan nama kolom (strip whitespace)."""
+    """Read the CSV dataset and strip whitespace from column names."""
     df = pd.read_csv(path)
     df.columns = df.columns.str.strip()
     return df
 
 
 def explore_data(df):
-    """Menampilkan ringkasan struktur, tipe data, missing value, dan statistik deskriptif."""
+    """Print the data structure, data types, missing values, and descriptive statistics."""
     print("First few rows of the DataFrame:")
     print(df.head())
 
